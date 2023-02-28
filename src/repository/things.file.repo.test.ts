@@ -1,12 +1,12 @@
-import { ThingsFileRepo } from './things.file.repo';
 import fs from 'fs/promises';
+import { ThingsMongooseRepo } from './things.mongoose.repo';
 jest.mock('fs/promises');
 
 describe('Given ThingsFileRepo', () => {
   // Arrange
-  const repo = new ThingsFileRepo();
+  const repo = new ThingsMongooseRepo();
   test('Then it could be instantiated', () => {
-    expect(repo).toBeInstanceOf(ThingsFileRepo);
+    expect(repo).toBeInstanceOf(ThingsMongooseRepo);
   });
 
   describe('When I use query', () => {
