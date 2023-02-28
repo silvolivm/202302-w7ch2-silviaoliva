@@ -2,6 +2,11 @@ import express, { NextFunction, Request, Response } from 'express';
 import morgan from 'morgan';
 import cors from 'cors';
 import { thingsRouter } from './routers/things.router.js';
+import createDebug from 'debug';
+import { CustomError } from './interfaces/interfaces.js';
+
+const debug = createDebug('w6:app');
+
 export const app = express();
 app.disable('x-powered-by');
 
@@ -13,7 +18,7 @@ app.use(express.json());
 app.use(cors(corsOptions));
 
 app.use((_req, _resp, next) => {
-  console.log('Soy un middleware');
+  debug('Soy un middleware');
   next();
 });
 
@@ -27,8 +32,10 @@ app.use('/things', thingsRouter);
 
 app.get('/', (_req, resp) => {
   resp.json({
-    name: 'Pepe',
-    age: 22,
+    info: '/Esta es una prueba',
+    endpoints: {
+      things: '/things',
+    },
   });
 });
 app.get('/:id', (req, resp) => {
@@ -41,9 +48,20 @@ app.post('/', (req, resp) => {
 app.patch('/:id');
 app.delete('/:id');
 
-app.use((_error: Error, _req: Request, resp: Response, _next: NextFunction) => {
-  console.log('Soy el middleware de errores');
-  resp.json({
-    error: [],
-  });
-});
+app.use(
+  (error: CustomError, _req: Request, resp: Response, _next: NextFunction) => {
+    debug('Soy el middleware de errores');
+    const status = error.statusCode || 500;
+    const statusMessage = error.statusMessage || 'Internal server error';
+    resp.status(status);
+    resp.json({
+      error: [
+        {
+          status,
+          statusMessage,
+        },
+      ],
+    });
+    debug(status, statusMessage, error.message);
+  }
+);

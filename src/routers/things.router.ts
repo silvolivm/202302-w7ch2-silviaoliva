@@ -1,10 +1,11 @@
 import { Router } from 'express';
 import { ThingsController } from '../controllers/things.controller.js';
-import { ThingsFileRepo } from '../repository/things.file.repo.js';
+import { ThingsMongooseRepo } from '../repository/things.mongoose.repo.js';
 
 // eslint-disable-next-line new-cap
 export const thingsRouter = Router();
-const repo = new ThingsFileRepo();
+// File Repo const repo = new ThingsFileRepo();
+const repo = new ThingsMongooseRepo();
 const controller = new ThingsController(repo);
 
 thingsRouter.get('/', controller.getAll.bind(controller));

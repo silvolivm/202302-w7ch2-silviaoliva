@@ -1,4 +1,4 @@
-import { model, Schema } from 'mongoose.js';
+import { model, Schema } from 'mongoose';
 import { Thing } from '../entities/thing.js';
 
 const thingSchema = new Schema<Thing>({
@@ -20,5 +20,9 @@ const thingSchema = new Schema<Thing>({
     max: 10,
   },
 });
+
+export const ThingModel = model('Thing', thingSchema, 'things');
+
+// Nombre del modelo, esquema, alias en singular y minúscula del modelo, esquema, alias en singular y minúscula
 
 export const ThingModel = model('Thing', thingSchema, 'things');
