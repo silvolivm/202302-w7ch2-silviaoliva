@@ -24,5 +24,3 @@ const thingSchema = new Schema<Thing>({
 export const ThingModel = model('Thing', thingSchema, 'things');
 
 // Nombre del modelo, esquema, alias en singular y minúscula del modelo, esquema, alias en singular y minúscula
-
-export const ThingModel = model('Thing', thingSchema, 'things');
