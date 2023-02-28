@@ -13,10 +13,11 @@ app.disable('x-powered-by');
 const corsOptions = {
   origin: '*',
 };
+
 app.use(morgan('dev'));
 app.use(express.json());
 app.use(cors(corsOptions));
-
+app.use(express.static('public'));
 app.use((_req, _resp, next) => {
   debug('Soy un middleware');
   next();
